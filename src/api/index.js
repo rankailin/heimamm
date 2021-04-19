@@ -1,3 +1,3 @@
 import Vue from 'vue'
-import $axios from './intercept'
+import $axios from './heimamm'
 Vue.prototype.$axios = $axios

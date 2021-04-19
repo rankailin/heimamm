@@ -12,5 +12,14 @@ export default {
 </script>
 
 <style>
-
+html,
+body,
+#app {
+  height: 100%;
+}
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
 </style>

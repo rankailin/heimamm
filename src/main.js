@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import '@/api'
 import './plugins/element.js'
+import '@/utils/md5'
 
 Vue.config.productionTip = false
 
