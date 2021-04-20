@@ -65,15 +65,14 @@
           ></el-form-item
         >
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="login('ruleForm')"
-            style="width:100%"
+          <el-button type="primary" @click="login" style="width:100%"
             >登录</el-button
           >
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" style="width:100%">注册</el-button>
+          <el-button type="primary" style="width:100%" @click="showReg"
+            >注册</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -81,13 +80,19 @@
     <div class="right">
       <img src="@/assets/img/login_bg.png" alt="" />
     </div>
+    <Registration ref="regRef" />
   </div>
 </template>
 
 <script>
+import Registration from './Registration'
 export default {
+  components: {
+    Registration
+  },
   data () {
     return {
+      dialogVisible: false,
       imgcaptchaURl: process.env.VUE_APP_BASEURL + '/captcha?type=login',
       ruleForm: {
         phone: '18511111111',
@@ -108,8 +113,9 @@ export default {
           }
         ],
         password: [
-          { message: '请输入密码', trigger: 'blur' },
+          { required: true, message: '请输入密码', trigger: 'blur' },
           {
+            required: true,
             min: 6,
             max: 16,
             message: '密码长度在 6 到 16 个字符',
@@ -117,8 +123,14 @@ export default {
           }
         ],
         code: [
-          { message: '验证码不能为空', trigger: 'blur' },
-          { min: 4, max: 4, message: '验证码应4个字符', trigger: 'blur' }
+          { required: true, message: '验证码不能为空', trigger: 'blur' },
+          {
+            required: true,
+            min: 4,
+            max: 4,
+            message: '验证码应4个字符',
+            trigger: 'blur'
+          }
         ],
         checked: [
           {
@@ -132,13 +144,16 @@ export default {
     }
   },
   methods: {
+    showReg () {
+      this.$refs.regRef.centerDialogVisible = true
+    },
     /** 用户登录 */
-    login (formName) {
-      this.$refs[formName].validate(async valid => {
-        console.log(valid)
-        if (!valid) return false
+    login () {
+      this.$refs.ruleForm.validate(async valid => {
+        // console.log(valid)
+        if (!valid) return
         const info = await this.$axios.login(this.ruleForm)
-        console.log(info)
+        // console.log(info)
         if (info.code === 200) {
           localStorage.setItem('token', info.data.token)
           this.$message.success('登录成功')

@@ -22,4 +22,9 @@ body,
   margin: 0px;
   padding: 0px;
 }
+.el-dialog__header {
+  color: #fff;
+  background: linear-gradient(270deg, #01c6fa, #1493fa);
+  text-align: center;
+}
 </style>
